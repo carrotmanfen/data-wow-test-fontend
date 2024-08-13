@@ -11,6 +11,10 @@ const AppBar: React.FC = () => {
         window.location.href = '/post';
     }
 
+    const handleGoToMyPost = () => {
+        window.location.href = '/myPost';
+    }
+
     const handleGoToFollow = () => {
         window.location.href = '/follow';
     }
@@ -35,6 +39,10 @@ const AppBar: React.FC = () => {
                     <div onClick={handleGoToPost}
                         className={`text-xl h-full font-bold py-4 px-2 hover:text-hoverPrimary cursor-pointer ${path == "/post" ? 'bg-white text-black' : ''}`}
                     >Post</div>
+
+                    <div onClick={handleGoToMyPost}
+                        className={`text-xl h-full font-bold py-4 px-2 hover:text-hoverPrimary cursor-pointer ${path == "/myPost" ? 'bg-white text-black' : ''}`}
+                    >My Post</div>
 
                     <div onClick={handleGoToFollow}
                         className={`text-xl h-full font-bold py-4 px-2 hover:text-hoverPrimary cursor-pointer ${path == "/follow" ? 'bg-white text-black' : ''}`}>Follow</div>
