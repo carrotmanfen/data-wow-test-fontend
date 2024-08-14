@@ -9,6 +9,7 @@ const Follow: React.FC = () => {
     const { userSearchData, isPending: isPendingSearch, error: errorSearch, getUserSearch } = useAccount();
 
     const [detailModalOpen, setDetailModalOpen] = useState(false);
+    
 
     const openDetailModal = () => setDetailModalOpen(true);
     const closeDetailModal = () => setDetailModalOpen(false);
@@ -23,6 +24,10 @@ const Follow: React.FC = () => {
         await getUserSearch(name);
         console.log(userSearchData);
         openDetailModal();
+    }
+
+    const handleSeeProfile = async () => {
+        window.location.href = '/profile?search=' + userSearchData.name;
     }
 
     useEffect(() => {
@@ -47,7 +52,7 @@ const Follow: React.FC = () => {
                     ))}
                 </ul>
                 : <p>Loading...</p>}
-            {detailModalOpen&&userSearchData&&<UserModal name={userSearchData.name} following={userSearchData.following.length} followers={userSearchData.followers.length} onClose={closeDetailModal}/>}
+            {detailModalOpen&&userSearchData&&<UserModal name={userSearchData.name} following={userSearchData.following.length} followers={userSearchData.followers.length} onClose={closeDetailModal} seeProfile={handleSeeProfile}/>}
         </div>
     );
 };

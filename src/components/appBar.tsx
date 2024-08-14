@@ -38,7 +38,7 @@ const AppBar: React.FC = () => {
 
                     <div onClick={handleGoToPost}
                         className={`text-xl h-full font-bold py-4 px-2 hover:text-hoverPrimary cursor-pointer ${path == "/post" ? 'bg-white text-black' : ''}`}
-                    >Post</div>
+                    >Following Post</div>
 
                     <div onClick={handleGoToMyPost}
                         className={`text-xl h-full font-bold py-4 px-2 hover:text-hoverPrimary cursor-pointer ${path == "/myPost" ? 'bg-white text-black' : ''}`}

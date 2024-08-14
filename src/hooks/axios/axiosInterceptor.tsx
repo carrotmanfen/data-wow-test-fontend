@@ -5,7 +5,6 @@ const createAxiosInstance = (refreshToken:any) => {
 
     instance.interceptors.request.use(
         (config) => {
-            // Add any request configuration here if needed
             return config;
         },
         (error) => {
@@ -27,7 +26,6 @@ const createAxiosInstance = (refreshToken:any) => {
                     originalRequest.headers['Authorization'] = 'Bearer ' + newAccessToken;
                     return instance(originalRequest);
                 } catch (refreshError) {
-                    // Prevent retry loop by not retrying on token refresh failure
                     window.location.href = '/login';
                     return Promise.reject(refreshError);
                 }

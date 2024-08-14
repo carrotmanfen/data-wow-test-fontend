@@ -6,12 +6,14 @@ import { useRecoilState } from 'recoil';
 import { nameState } from '@/atoms/userRecoil';
 import { useAccount } from '@/hooks/useAccount';
 
-const Posts: React.FC = () => {
-    const { data, isPending, error, getAllFollowingPost, commentPost, deleteComment } = usePost();
-    const { data:userData, getProfile } = useAccount();
-    const [name, setName]= useRecoilState(nameState);
+const AccountPage: React.FC = () => {
+    const { data, isPending, error, findPost, commentPost, deleteComment } = usePost();
+    const { data: userData, getProfile } = useAccount();
+    const [name, setName] = useRecoilState(nameState);
 
     const [commentText, setCommentText] = useState<{ [key: string]: string }>({});
+
+    const [searchName, setSearchName] = useState('');
 
     const handleCommentChange = (postId: string, value: string) => {
         setCommentText(prevState => ({ ...prevState, [postId]: value }));
@@ -21,14 +23,14 @@ const Posts: React.FC = () => {
         const text = commentText[postId];
         if (text) {
             await commentPost(postId, text);
-            setCommentText(prevState => ({ ...prevState, [postId]: '' })); 
-            await getAllFollowingPost();
+            setCommentText(prevState => ({ ...prevState, [postId]: '' }));
+            await findPost(searchName);
         }
     }
 
     const handleDeleteComment = async (postId: string, commentId: string) => {
         await deleteComment(postId, commentId);
-        await getAllFollowingPost();
+        await findPost(searchName);
     }
 
     useEffect(() => {
@@ -42,14 +44,18 @@ const Posts: React.FC = () => {
 
     useEffect(() => {
         if (data.length === 0) {
-            getAllFollowingPost();
+            const searchParams = new URLSearchParams(window.location.search);
+            const search = searchParams.get('search');
+            setSearchName(search || '');
+            console.log(search);
+            findPost(search||'');
         }
-    }, [data, getAllFollowingPost]);
+    }, [data, findPost]);
 
     return (
         <div className="flex flex-col w-screen h-screen items-center min-h-screen">
             <AppBar />
-            <h1 className="mb-4 text-3xl font-bold mt-8">Posts</h1>
+            <h1 className="mb-4 text-3xl font-bold mt-8">Posts of {searchName}</h1>
             {data != null ? <ul className="bg-white border rounded-lg shadow-md w-1/3">
                 {data.map((post: any) => (
                     <li key={post._id} className="flex flex-col justify-between p-4 border-b last:border-b-0 w-full">
@@ -66,7 +72,7 @@ const Posts: React.FC = () => {
                                             <div className='flex flex-row justify-between'>
                                                 <p className="text-sm break-all">{comment.text}</p>
                                                 {name == comment.commentBy ? <button className="p-1 text-white text-sm bg-primaryRed rounded-lg hover:bg-hoverRed focus:outline-none focus:ring-2 focus:ring-hoverRed focus:ring-offset-2"
-                                                    onClick={() => {handleDeleteComment(post._id, comment._id)}}>Delete Comment</button> : null}
+                                                    onClick={() => { handleDeleteComment(post._id, comment._id) }}>Delete Comment</button> : null}
                                             </div>
                                             <p className="text-xs ">Commented by: {comment.commentBy}</p>
                                             <p className="text-xs ">{new Date(comment.date).toLocaleString()}</p>
@@ -87,4 +93,4 @@ const Posts: React.FC = () => {
     );
 };
 
-export default Posts;
+export default AccountPage;

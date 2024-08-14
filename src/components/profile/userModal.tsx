@@ -1,11 +1,11 @@
 import React from 'react';
 
-const UserModal: React.FC<{ name: string, following: number, followers:number, onClose: any }> = ({ name, following,followers, onClose }) => {
+const UserModal: React.FC<{ name: string, following: number, followers:number, onClose: any, seeProfile:any }> = ({ name, following,followers, onClose, seeProfile }) => {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div className="w-full max-w-md h-54 p-6 bg-white border rounded-lg shadow-md overflow-hidden">
-                <h3 className="mb-4 text-xl font-bold text-center">{name}</h3>
+                <h3 className="mb-4 text-xl font-bold text-center text-blue-600 hover:underline hover:cursor-pointer" onClick={seeProfile}>{name}</h3>
                 <div className="h-16 overflow-y-auto">
                     <p>following: {following}</p>
                     <p>followers: {followers}</p>

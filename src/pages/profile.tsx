@@ -1,14 +1,17 @@
-// pages/profile.tsx
 import React, { useEffect, useState } from 'react';
 import { useAccount } from '@/hooks/useAccount';
 import Modal from '@/components/profile/modal';
 import AppBar from '@/components/appBar';
 import { useFollow } from '@/hooks/useFollow';
 import { useDeleteAccount } from '@/hooks/useDeleteAccount';
+import { useRecoilState } from 'recoil';
+import { nameState } from '@/atoms/userRecoil';
 
 const Profile: React.FC = () => {
 
     const { data, isPending, error, getProfile } = useAccount();
+
+    const [name, setName] = useRecoilState(nameState);
     const { unFollow } = useFollow();
     const { deleteAccount } = useDeleteAccount();
 
@@ -39,6 +42,9 @@ const Profile: React.FC = () => {
     useEffect(() => {
         if (data === null) {
             getProfile();
+        }else{
+            setName(data.name);
+            console.log(name);
         }
     }, [data]);
 

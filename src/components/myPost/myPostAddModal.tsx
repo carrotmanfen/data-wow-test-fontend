@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 
-const MyPostModal: React.FC<{  onClose: any, addPost:any }> = ({  onClose, addPost }) => {
+const MyPostAddModal: React.FC<{  onClose: any, addPost:any }> = ({  onClose, addPost }) => {
     const [text, setText] = useState("");
     const handleAddPost = async () => {
         await addPost(text);
@@ -38,4 +38,4 @@ const MyPostModal: React.FC<{  onClose: any, addPost:any }> = ({  onClose, addPo
     );
 };
 
-export default MyPostModal;
+export default MyPostAddModal;

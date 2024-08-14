@@ -18,7 +18,6 @@ const Login: React.FC = () => {
         e.preventDefault();  
         console.log(username, password);
         if (username !== '' && password !== '') {
-            // alert('Login successful!');  
             const isLoginSuccess =  await login({username, password});
             if(isLoginSuccess){
                 window.location.href = '/profile';

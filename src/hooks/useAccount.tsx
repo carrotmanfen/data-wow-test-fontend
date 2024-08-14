@@ -8,6 +8,8 @@ export function useAccount() {
     const [userSearchData, setUserSearchData] = useState<any>(null);
     const [isPending, setIsPending] = useState(false);
     const [error, setError] = useState(false);
+
+
     const url = process.env.NEXT_PUBLIC_BACKEND_SERVICE_URL
 
     const getProfile = useCallback(
@@ -33,6 +35,8 @@ export function useAccount() {
                         }
                     });
                 setData(response.data.results);
+                console.log(response.data.results.name);
+                console.log(name);
                 setIsPending(false);
                 return true;
             } catch (error) {
