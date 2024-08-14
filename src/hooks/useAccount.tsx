@@ -20,13 +20,6 @@ export function useAccount() {
                 if (!url) {
                     throw new Error('url is not defined');
                 }
-                // const  response = await axiosWithHandlerAccessToken(refreshToken, {
-                //     method: 'GET',
-                //     url: url + 'accounts/me',
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //     }
-                // });
                 const response = await axios.get(url + 'accounts/me',
                     {
                         headers: {
